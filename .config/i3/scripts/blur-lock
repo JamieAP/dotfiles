@@ -1,0 +1,22 @@
+#!/bin/sh
+
+
+IMAGE=/tmp/i3lock-$$.png
+SCREENSHOT="scrot $IMAGE"
+
+# Here are some imagemagick blur types
+# Uncomment one to use, if you have multiple, the last one will be used
+
+# All options are here: http://www.imagemagick.org/Usage/blur/#blur_args
+BLURTYPE="0x8"
+
+# Get the screenshot, add the blur and lock the screen with it
+$SCREENSHOT
+convert $IMAGE -blur $BLURTYPE $IMAGE
+i3lock -i $IMAGE
+
+# Turn the screen off after a delay.
+sleep 60; pgrep i3lock && xset dpms force off
+
+rm $IMAGE
+

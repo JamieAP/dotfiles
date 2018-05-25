@@ -1,0 +1,67 @@
+source "gpg -d ~/.mutt/mutt.secret.gpg |"
+source ~/.mutt/zenburn.muttrc
+
+set pager_index_lines  = 15
+set spoolfile          = +INBOX
+set imap_idle          = yes
+set imap_keepalive     = 60
+set imap_passive       = no
+set reverse_name       = yes
+set delete             = no
+set postpone           = ask-no
+set mail_check         = 10
+set timeout            = 300
+set ascii_chars        = yes
+set editor             = "vim +13 -c 'set nobackup' -c 'set noswapfile' -c 'set nowritebackup' -c 'set tw=72 ft=mail noautoindent'"
+set header_cache       = ~/.cache/mutt
+set sort               = 'threads'
+set sort_aux           = 'reverse-last-date-received'
+set index_format       = "%D %-15.15L     %s"
+set date_format        = "%d/%m/%y %H:%M"
+set forward_format     = "Fwd: %s"
+set mailcap_path       = ~/.mutt/mailcap
+set sidebar_width      = 15
+set sidebar_short_path = yes
+set ssl_force_tls      = yes
+set ssl_starttls       = yes
+set ssl_use_sslv2      = no
+set ssl_use_sslv3      = no
+set ssl_use_tlsv1      = no
+set ssl_use_tlsv1_1    = no
+set ssl_use_tlsv1_2    = yes
+set ssl_verify_dates   = yes
+set ssl_verify_host    = yes
+
+set imap_check_subscribed
+set include
+set noallow_8bit 
+set hidden_host 
+set envelope_from
+set edit_headers
+set fast_reply
+set nomark_old
+set nobeep
+set nomarkers
+set mime_forward
+set text_flowed
+set pager_stop
+
+unset record
+unset ssl_usesystemcerts
+
+alternative_order text/plain text/enriched text/html
+ignore * # ignore all headers
+unignore From: To: CC: Date: Subject: X-mailer: User-Agent: # show only these
+hdr_order From: To: CC: Date: Subject: X-mailer: User-Agent: # and in this order
+auto_view text/html
+
+bind index \co sidebar-open
+bind pager \co sidebar-open
+bind index k sidebar-prev
+bind index j sidebar-next
+bind pager k sidebar-prev
+bind pager j sidebar-next
+
+macro index b '<enter-command>toggle sidebar_visible<enter>'
+macro pager b '<enter-command>toggle sidebar_visible<enter>'
+macro pager \cb <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'

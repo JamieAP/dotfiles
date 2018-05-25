@@ -1,0 +1,152 @@
+set $mod Mod4
+
+font pango:NotoSans 10
+
+floating_modifier $mod
+
+bindsym $mod+Return exec alacritty --working-directory $HOME
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+bindsym $mod+j focus left
+bindsym $mod+k focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+h split h
+
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym $mod+Shift+c reload
+
+bindsym $mod+Shift+r restart
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+mode "resize" {
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bar {
+        status_command i3status
+        colors {
+                separator #000000
+                focused_workspace  #000000 #000000 #ffff00
+                urgent_workspace   #000000 #ff0000 #ffffff
+                inactive_workspace #000000 #000000 #ffffff
+	}
+}
+
+client.focused          #000000 #000000 #ffffff #000000   #000000
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #000000
+client.unfocused        #333333 #222222 #888888 #292d2e   #000000
+client.urgent           #2f343a #900000 #ffffff #900000   #000000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #000000
+client.background       #ffffff
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 
+
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
+bindcode 124 exec --no-startup-id ~/.config/i3/scripts/blur-lock
+bindsym --release Control+Shift+3 exec import -window root png:- | xclip -selection c -t image/png
+bindsym --release Control+Shift+4 exec import png:- | xclip -selection c -t image/png 
+ 
+for_window [title="(?i)authy"] floating enable
+for_window [title="(?i)authy"] move to workspace $ws8
+for_window [class="Spotify"] move to workspace $ws9
+
+assign [class="(?i)slack"]    $ws10
+assign [class="(?i)discord"]  $ws10
+assign [class="(?i)mutt"]     $ws2
+
+workspace_layout tabbed
+
+exec --no-startup-id chromium
+exec --no-startup-id mutt
+exec --no-startup-id /usr/bin/chromium --profile-directory=Default --app-id=gaedmjdfmmahhbjefcbgaolhhanlaolb
+exec --no-startup-id discord
+exec --no-startup-id slack
+exec --no-startup-id /usr/bin/spotify --force-device-scale-factor=2 %U
+exec --no-startup-id /usr/bin/xset r rate 200
+exec --no-startup-id xautolock -time 5 -locker '~/.config/i3/scripts/blur-lock'

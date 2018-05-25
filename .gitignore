@@ -1,0 +1,17 @@
+*
+!.*
+.java
+.bash*
+*history*
+.esd_auth
+.mutt_certificates
+.yarnrc
+.zcompdump*
+.zsh-update
+.lesshst
+.viminfo
+.oh-my-zsh/.gitignore
+.Xauthority
+.vim
+.strongbox_keyring
+.wget_hsts

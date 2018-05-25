@@ -1,0 +1,13 @@
+[user]
+	email = mail@jperkins.co.uk
+	name = Jamie Perkins
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[filter "strongbox"]
+	clean = strongbox -clean %f
+	smudge = strongbox -smudge %f
+	required = true
+[diff "strongbox"]
+	textconv = strongbox -diff
+[core]
+	excludesfile = /home/jamie/.gitignore_global
