@@ -1,6 +1,6 @@
 set $mod Mod4
 
-font pango:NotoSans 10
+font pango:Monaco 6
 
 floating_modifier $mod
 
